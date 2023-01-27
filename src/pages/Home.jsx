@@ -2,8 +2,8 @@
 
 function Home(){
     return (
-        <main>
-            
+        <main className=" text-red-700">
+            lolo
         </main>
     )
 }
