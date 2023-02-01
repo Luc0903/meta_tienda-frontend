@@ -5,7 +5,7 @@ function NavBar(){
 
     const navlinks = [
         {
-            route: 'home',
+            route: '',
             icon: <IoHome />
         },
         {
