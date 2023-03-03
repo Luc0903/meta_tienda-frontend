@@ -101,15 +101,6 @@ export default function AdminPage() {
         fileInput={fileInput}
         clotheInfo={clotheInfo}
       />
-      {/* <form onSubmit={handleSubmit}>
-        {productInputs.map((elem) => {
-          return generateInput(elem);
-        })}
-        <input type='file' name='productImage' ref={fileInput} accept='image/png, image/jpeg' />
-        <button className=' bg-black text-zinc-50' type='submit'>
-          Agregar producto
-        </button>
-      </form> */}
     </div>
   );
 }
