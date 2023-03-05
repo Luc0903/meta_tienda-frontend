@@ -1,55 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 
-function NewProductForm({ clotheInfo, handleChange, handleSubmit, fileInput }) {
-  // const productInputs = [
-  //   {
-  //     label: 'Nombre',
-  //     type: 'Text',
-  //     styles: '',
-  //     placeholder: 'Nombre del producto',
-  //     name: 'name',
-  //     value: clotheInfo.name,
-  //   },
-  //   {
-  //     label: 'Descripción',
-  //     type: 'Text',
-  //     styles: '',
-  //     placeholder: 'Ej: Talles, datos, etc',
-  //     name: 'description',
-  //     value: clotheInfo.description,
-  //   },
-  //   {
-  //     label: 'Categoria',
-  //     type: 'Text',
-  //     styles: '',
-  //     placeholder: 'Ej: Jeans, Camisas',
-  //     name: 'category',
-  //     value: clotheInfo.category,
-  //   },
-  //   {
-  //     label: 'Precio',
-  //     type: 'Text',
-  //     styles: '',
-  //     placeholder: 'Solo números',
-  //     name: 'price',
-  //     value: clotheInfo.price,
-  //   },
-  //   {
-  //     label: 'Stock',
-  //     type: 'Text',
-  //     styles: '',
-  //     placeholder: 'Solo números',
-  //     name: 'stock',
-  //     value: clotheInfo.stock,
-  //   },
-  // ];
-
+function NewProductForm({ productInputs, handleChange, handleSubmit, fileInput }) {
   return (
     <form onSubmit={handleSubmit} className=' flex flex-col'>
-      {/* {productInputs.map((elem) => {
+      {productInputs.map((elem) => {
         return (
           <input
-            key={uuidv4()}
+            key={elem.name}
             className={elem.styles}
             placeholder={elem.placeholder}
             name={elem.name}
@@ -58,8 +15,8 @@ function NewProductForm({ clotheInfo, handleChange, handleSubmit, fileInput }) {
             autoComplete='off'
           />
         );
-      })} */}
-      <input
+      })}
+      {/* <input
         type='text'
         className=''
         placeholder='Nombre del producto'
@@ -103,7 +60,7 @@ function NewProductForm({ clotheInfo, handleChange, handleSubmit, fileInput }) {
         onChange={handleChange}
         value={clotheInfo.stock}
         autoComplete='off'
-      />
+      /> */}
       <input type='file' name='productImage' ref={fileInput} accept='image/png, image/jpeg' />
       <button className=' bg-black text-zinc-50' type='submit'>
         Agregar producto
