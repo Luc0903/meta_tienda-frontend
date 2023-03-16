@@ -1,5 +1,6 @@
 import { useState, createRef } from 'react';
 import axios from 'axios';
+import { generateImageUrl, generateProduct } from '../service';
 
 function useAdminFunctions() {
   const fileInput = createRef();
@@ -28,20 +29,15 @@ function useAdminFunctions() {
     formData.append('clotheImage', fileInput.current.files[0]);
 
     try {
-      let serverResponse = await fetch('http://localhost:8000/api/images', {
-        method: 'POST',
-        body: formData,
-        mode: 'cors',
-      });
+      let serverResponse = await generateImageUrl(formData);
 
       let imageFileData = await serverResponse.json();
 
       if (imageFileData) {
-        const { data } = await axios.post('http://localhost:8000/api/products', {
-          ...clotheInfo,
-          url: imageFileData.result.secure_url,
-        });
-        console.log(data.createdProduct);
+        const {
+          data: { createdProduct },
+        } = await generateProduct(clotheInfo, imageFileData);
+        console.log(createdProduct);
       }
     } catch (error) {
       console.log('Mensaje de error', error);
