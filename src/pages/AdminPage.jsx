@@ -1,20 +1,8 @@
-import { useState, createRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import NewProductForm from '../components/NewProductForm';
-import axios from 'axios';
+import useAdminFunctions from '../hooks/useAdminFunctions';
 
 export default function AdminPage() {
-  const fileInput = createRef();
-
-  const initialValue = {
-    name: '',
-    description: '',
-    category: '',
-    price: '',
-    stock: '',
-  };
-
-  const [clotheInfo, setClotheInfo] = useState(initialValue);
+  const { handleChange, clotheInfo, handleSubmit, fileInput } = useAdminFunctions();
 
   const productInputs = [
     {
@@ -59,48 +47,14 @@ export default function AdminPage() {
     },
   ];
 
-  function handleChange(e) {
-    setClotheInfo({
-      ...clotheInfo,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append('clotheImage', fileInput.current.files[0]);
-
-    try {
-      let serverResponse = await fetch('http://localhost:8000/api/images', {
-        method: 'POST',
-        body: formData,
-        mode: 'cors',
-      });
-
-      let imageFileData = await serverResponse.json();
-
-      if (imageFileData) {
-        const { data } = await axios.post('http://localhost:8000/api/products', {
-          ...clotheInfo,
-          url: imageFileData.result.secure_url,
-        });
-        console.log(data.createdProduct);
-      }
-    } catch (error) {
-      console.log('Mensaje de error', error);
-    }
-  }
-
   return (
     <div>
       <NewProductForm
         productInputs={productInputs}
+        clotheInfo={clotheInfo}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         fileInput={fileInput}
-        clotheInfo={clotheInfo}
       />
     </div>
   );
