@@ -14,3 +14,7 @@ export async function generateProduct(clotheInfo, imageFileData) {
     url: imageFileData.result.secure_url,
   });
 }
+
+export async function loginOrRegister(endpoint, userData) {
+  return await axios.post(endpoint, { ...userData });
+}

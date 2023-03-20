@@ -1,39 +1,31 @@
-import { useState } from 'react';
 import NavBar from '../components/NavBar';
-import axios from 'axios';
+import useProfileFunctions from '../hooks/useProfileFunctions';
 
 function ProfilePage() {
-  const initialValue = { name: '', email: '', password: '' };
-
-  const [isLogging, setIsLogging] = useState(false);
-  const [userData, setUserData] = useState(initialValue);
-
-  function handleChange(e) {
-    setUserData({
-      ...userData,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (isLogging) {
-      try {
-        const { data } = await axios.post('http://localhost:8000/api/v1/user/login', { userData });
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      try {
-        const { data } = await axios.post('http://localhost:8000/api/v1/user/register', {
-          ...userData,
-        });
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }
+  const { handleChange, handleSubmit, userData, setIsLogging, isLogging } = useProfileFunctions();
+  const formInputs = [
+    {
+      label: 'Nombre',
+      placeholder: 'Máximo 20 caracteres',
+      styles: '',
+      name: 'name',
+      value: userData.name,
+    },
+    {
+      label: 'Correo',
+      placeholder: '',
+      styles: '',
+      name: 'email',
+      value: userData.email,
+    },
+    {
+      label: 'Contraseña',
+      placeholder: 'Mínimo 8 caracteres',
+      styles: '',
+      name: 'password',
+      value: userData.password,
+    },
+  ];
 
   return (
     <div>
@@ -50,30 +42,21 @@ function ProfilePage() {
         </button>
       </div>
       <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          placeholder='nombre'
-          name='name'
-          className=''
-          onChange={handleChange}
-          value={userData.name}
-        />
-        <input
-          type='text'
-          placeholder='email'
-          name='email'
-          className=''
-          onChange={handleChange}
-          value={userData.email}
-        />
-        <input
-          type='text'
-          placeholder='contraseña'
-          name='password'
-          className=''
-          onChange={handleChange}
-          value={userData.password}
-        />
+        {formInputs.map((elem) => {
+          return (
+            <div key={elem.name}>
+              <label>{elem.label}</label>
+              <input
+                className={elem.styles}
+                placeholder={elem.placeholder}
+                name={elem.name}
+                onChange={(e) => handleChange(e)}
+                value={elem.value}
+                autoComplete='off'
+              />
+            </div>
+          );
+        })}
         <button type='submit'>sumit</button>
       </form>
     </div>
